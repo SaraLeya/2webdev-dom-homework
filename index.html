@@ -87,24 +87,24 @@
   }
   likesPlus();
 
+//вот этот кусок почему не работает?
 
-
-  const commentsContainer = [
-    {
-      name: "Глеб Фокин",
-      commentDate: "12.02.22 12:18",
-      commentText: "Это будет первый комментарий на этой странице",
-      commentLikes: 3,
-      isLiked: false,
-    },
-    {
-      name: "Варвара Н.",
-      commentDate: "13.02.22 19:22",
-      commentText: "Мне нравится как оформлена эта страница! ❤",
-      commentLikes: 75,
-      isLiked: false,
-    }
-  ];
+  const commentsContainer = [];
+  fetch(
+    "https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments",
+    {method: "GET"}
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseData) => {
+      console.log(responseData)
+      if (responseData && responseData.comments){
+        //что это вообще 
+    commentsContainer = responseData.comments;
+      }
+      rendersComments();
+    });
 
   const renderscommentsContainer = () => {
     const commentsContainerHtml = commentsContainer.map((commentUser, index) => {
