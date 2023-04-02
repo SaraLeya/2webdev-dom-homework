@@ -90,21 +90,22 @@
 //вот этот кусок почему не работает?
 
   const commentsContainer = [];
-  fetch(
+  const fetchPromise = fetch(
     "https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments",
     {method: "GET"}
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log(responseData)
-      if (responseData && responseData.comments){
-        //что это вообще 
-    commentsContainer = responseData.comments;
-      }
+  );
+  fetchPromise.then((response) => {
+    // Запускаем преобразовываем "сырые" данные от API в json формат
+    const jsonPromise = response.json();
+    // Подписываемся на результат преобразования
+    jsonPromise.then((responseData) => {
+      console.log(responseData);
+     // получили данные и рендерим их в приложении
+     
+     commentsContainer = responseData.comments;
       rendersComments();
     });
+  });
 
   const renderscommentsContainer = () => {
     const commentsContainerHtml = commentsContainer.map((commentUser, index) => {
