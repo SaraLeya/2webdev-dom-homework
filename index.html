@@ -89,8 +89,8 @@
 
 //вот этот кусок почему не работает?
 
-  const commentsContainer = [];
-  const fetchPromise = fetch(
+  let commentsContainer = [];
+  let fetchPromise = fetch(
     "https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments",
     {method: "GET"}
   );
