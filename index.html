@@ -28,8 +28,33 @@
 </body>
 
 <script>
-const renderscommentsContainer = () => {
-    const commentsContainerHtml = commentsContainer.map((commentUser, index) => {
+  const buttonElement = document.getElementById('buttonComent');
+  const listElement = document.getElementById('list');
+  const nameElement = document.getElementById('inputName');
+  const commentElement = document.getElementById('inputComment');
+  const likesContainerElement = document.getElementById('.likes-counter');
+
+  let commentsContainer = [];
+
+  let fetchPromise = fetch(
+    "https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments",
+    {method: "GET"}
+  );
+  fetchPromise.then((response) => {
+    // Запускаем преобразовываем "сырые" данные от API в json формат
+    const jsonPromise = response.json();
+    // Подписываемся на результат преобразования
+    jsonPromise.then((responseData) => {
+      console.log(responseData);
+     // получили данные и рендерим их в приложении
+     
+     commentsContainer = responseData.comments;
+      renderscommentsContainer();
+    });
+  });
+
+  onst renderscommentsContainer = () => {
+    const commentsContainerHtml = commentsContainer.map((commentUser, id) => {
       //сомнительно 
       return `<li data-id="${commentUser.id}" class="comment">
           <div class="comment-header">
@@ -59,43 +84,6 @@ const renderscommentsContainer = () => {
 
   renderscommentsContainer();
 
-  let myTime;
-  let myDate = new Date();
-  let day = myDate.getDate();
-  let month = myDate.getMonth();
-  let year = myDate.getFullYear();
-  let hour = myDate.getHours();
-  let minute = myDate.getMinutes();
-
-  if (day < 10) {
-    day = "0" + day;
-  }
-  if (month < 10) {
-    month = "0" + month;
-  }
-  if (minute < 10) {
-    minute = "0" + minute;
-  }
-
-  myTime = day + "." + month + "." + year + " " + hour + ":" + minute
-
-  const buttonElement = document.getElementById('buttonComent');
-  const listElement = document.getElementById('list');
-  const nameElement = document.getElementById('inputName');
-  const commentElement = document.getElementById('inputComment');
-  const likesContainerElement = document.getElementById('.likes-counter');
-
-  const commentsAnswer = () => {
-    const commentsAnswer = document.querySelectorAll(".comment");
-    
-    for (const commentAnswer of commentsAnswer) {
-      commentAnswer.addEventListener("click", () => {
-        const index = commentAnswer.dataset.index;
-        commentElement.value = ">" + commentsContainer[index].commentText + " " + commentsContainer[index].name + ",";
-      });
-  }
-}
-//Почем уне работают лайки? они айди не идентифицируют?
   const likesPlus = () => {
     const heartsElement = document.querySelectorAll(".like-button");
 
@@ -117,26 +105,44 @@ const renderscommentsContainer = () => {
   }
   likesPlus();
 
-//вот этот кусок почему не работает?
 
-  let commentsContainer = [];
-  let fetchPromise = fetch(
-    "https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments",
-    {method: "GET"}
-  );
-  fetchPromise.then((response) => {
-    // Запускаем преобразовываем "сырые" данные от API в json формат
-    const jsonPromise = response.json();
-    // Подписываемся на результат преобразования
-    jsonPromise.then((responseData) => {
-      console.log(responseData);
-     // получили данные и рендерим их в приложении
-     
-     commentsContainer = responseData.comments;
-      renderscommentsContainer();
-    });
-  });
 
+
+  let myTime;
+  let myDate = new Date();
+  let day = myDate.getDate();
+  let month = myDate.getMonth();
+  let year = myDate.getFullYear();
+  let hour = myDate.getHours();
+  let minute = myDate.getMinutes();
+
+  if (day < 10) {
+    day = "0" + day;
+  }
+  if (month < 10) {
+    month = "0" + month;
+  }
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+
+  myTime = day + "." + month + "." + year + " " + hour + ":" + minute
+
+  
+
+  const commentsAnswer = () => {
+    const commentsAnswer = document.querySelectorAll(".comment");
+    
+    for (const commentAnswer of commentsAnswer) {
+      commentAnswer.addEventListener("click", () => {
+        const index = commentAnswer.dataset.index;
+        commentElement.value = ">" + commentsContainer[index].commentText + " " + commentsContainer[index].name + ",";
+      });
+  }
+}
+
+  
+  
   
 
   buttonElement.addEventListener("click", () => {
@@ -149,8 +155,10 @@ const renderscommentsContainer = () => {
 
     fetch("https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments", {
       method: "POST",
-      body: JSON.stringify ({
-          date: 0,
+      body: 
+      JSON.stringify ({
+        //тут надо вставить функцию времени
+          date: myTime,
         likes: 0,
         isLiked: false,
         text: commentElement.value
