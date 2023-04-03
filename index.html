@@ -58,7 +58,7 @@ const renderscommentsContainer = () => {
   }
 
   renderscommentsContainer();
-  
+
   let myTime;
   let myDate = new Date();
   let day = myDate.getDate();
@@ -150,7 +150,7 @@ const renderscommentsContainer = () => {
     fetch("https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments", {
       method: "POST",
       body: JSON.stringify ({
-          date: myTime(),
+          date: 0,
         likes: 0,
         isLiked: false,
         text: commentElement.value
