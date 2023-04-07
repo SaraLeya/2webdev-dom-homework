@@ -53,7 +53,7 @@
     });
   });
 
-  onst renderscommentsContainer = () => {
+  function renderscommentsContainer(){
     const commentsContainerHtml = commentsContainer.map((commentUser, id) => {
       //сомнительно 
       return `<li data-id="${commentUser.id}" class="comment">
@@ -84,7 +84,7 @@
 
   renderscommentsContainer();
 
-  const likesPlus = () => {
+  function likesPlus() {
     const heartsElement = document.querySelectorAll(".like-button");
 
     for (const heartElement of heartsElement) {
@@ -130,7 +130,7 @@
 
   
 
-  const commentsAnswer = () => {
+  function commentsAnswer(){
     const commentsAnswer = document.querySelectorAll(".comment");
     
     for (const commentAnswer of commentsAnswer) {
