@@ -153,7 +153,7 @@ function buttonPost(){
     <div class="add-form-row">
       ${buttonHtml}
     </div>`;
-  buttonElement = document.getElementById('buttonComent'); // сохраняем ссылку на новую кнопку
+  buttonElement = document.getElementById('buttonComent'); 
   buttonElement.addEventListener("click", () => {
     nameElement.classList.remove("error");
     if (nameElement.value === "" || commentElement.value === "") {
@@ -161,7 +161,6 @@ function buttonPost(){
       commentElement.classList.add("error");
       return;
     }
-    addForm.textContent = 'Комментарий добавляется...';
     buttonPost();
   });
 });
