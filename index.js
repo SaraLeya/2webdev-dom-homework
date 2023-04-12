@@ -80,7 +80,7 @@ likesPlus();
 
 
 
-//function timeComment (t) {
+//function timeComment () {
    //let myTime = 0;
     //let myDate = new Date();
     //let day = myDate.getDate();
@@ -119,6 +119,49 @@ function commentsAnswer() {
 
 
 
+
+buttonElement.addEventListener("click", () => {
+  nameElement.classList.remove("error");
+  if (nameElement.value === "" || commentElement.value === "") {
+    nameElement.classList.add("error");
+    commentElement.classList.add("error");
+    return;
+  }
+  addForm.textContent = 'Комментарий добавляется...';
+
+  fetch("https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments", {
+    method: "POST",
+    body:
+      JSON.stringify({
+        text: commentElement.value,
+        name: nameElement.value,
+      })
+  })
+
+    .then((response) => {
+      return response.json();
+    })
+    .then(() => {
+  commentElement.value = '';
+  nameElement.value = '';
+  apiGet();
+})
+.then((response) => {
+  const buttonHtml = '<button id="buttonComent" class="add-form-button">Написать</button>';
+  addForm.innerHTML = `<input id="inputName" type="text" class="add-form-name" placeholder="Введите ваше имя">
+    <textarea id="inputComment" type="textarea" class="add-form-text" placeholder="Введите ваш комментарий"
+      rows="4"></textarea>
+    <div class="add-form-row">
+      ${buttonHtml}
+    </div>`;
+  buttonElement = document.getElementById('buttonComent'); // сохраняем ссылку на новую кнопку
+  buttonElement.addEventListener('click', () => {
+    buttonPost();
+  });
+});
+
+
+});
 
 function buttonPost(){ buttonElement.addEventListener("click", () => {
   nameElement.classList.remove("error");
@@ -163,4 +206,3 @@ function buttonPost(){ buttonElement.addEventListener("click", () => {
 
 });
 }
-buttonPost();
