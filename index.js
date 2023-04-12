@@ -123,8 +123,7 @@ buttonElement.addEventListener("click", () => {
     commentElement.classList.add("error");
     return;
   }
-  addForm.textContent = 'Комментарий добавляется...';
-  buttonPost()
+  buttonPost();
 });
 
 function buttonPost(){ 
@@ -163,7 +162,7 @@ function buttonPost(){
       return;
     }
     addForm.textContent = 'Комментарий добавляется...';
-    buttonPost()
+    buttonPost();
   });
 });
 };
