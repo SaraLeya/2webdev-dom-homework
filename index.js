@@ -23,6 +23,7 @@ function apiGet() {
     })
     .then((response) => {
       commentsContainer = response.comments;
+      document.getElementById('loaderStart').style = "display: none";
       renderscommentsContainer();
     })
 }
@@ -127,7 +128,7 @@ buttonElement.addEventListener("click", () => {
 });
 
 function buttonPost(){ 
-  addForm.textContent = 'Комментарий добавляется...';
+  document.getElementById('loaderComment').style = "display: contents";
   fetch("https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments", {
     method: "POST",
     body:
@@ -146,22 +147,7 @@ function buttonPost(){
   apiGet();
 })
 .then((response) => {
-  let buttonHtml = '<button id="buttonComent" class="add-form-button">Написать</button>';
-  addForm.innerHTML = `<input id="inputName" type="text" class="add-form-name" placeholder="Введите ваше имя">
-    <textarea id="inputComment" type="textarea" class="add-form-text" placeholder="Введите ваш комментарий"
-      rows="4"></textarea>
-    <div class="add-form-row">
-      ${buttonHtml}
-    </div>`;
-  buttonElement = document.getElementById('buttonComent'); 
-  buttonElement.addEventListener("click", () => {
-    nameElement.classList.remove("error");
-    if (nameElement.value === "" || commentElement.value === "") {
-      nameElement.classList.add("error");
-      commentElement.classList.add("error");
-      return;
-    }
-    buttonPost();
+  document.getElementById('loaderComments').innerHTML = `<div id="loaderComment" class="add-form" style="display: none">Комментарий загружается</div>`;
+  return response;
   });
-});
 };
