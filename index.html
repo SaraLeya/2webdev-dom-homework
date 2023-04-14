@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Проект "Комменты"</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<head>
-  <title>Проект "Комменты"</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-  <style>
-    .error {
-      background-color: blanchedalmond;
-    }
-  </style>
-  <div class="container">
-    <p id="loaderStart" >ЗАГРУЗКА...</p>
-    <ul id="list" class="comments">
-      <!--Список рендерится из JS-->
-    </ul>
-    <div id="loaderComment" class="add-form" style="display: none">Комментарий загружается</div>
-    <div id="add-form" class="add-form">
-      <input id="inputName" type="text" class="add-form-name" placeholder="Введите ваше имя">
-      <textarea id="inputComment" type="textarea" class="add-form-text" placeholder="Введите ваш комментарий"
-        rows="4"></textarea>
-      <div class="add-form-row">
-        <button id="buttonComent" class="add-form-button">Написать</button>
+  <body>
+    <style>
+      .error {
+        background-color: blanchedalmond;
+      }
+    </style>
+    <div class="container">
+      <p id="loaderStart" class="loaderStart">ЗАГРУЗКА...</p>
+      <ul id="list" class="comments">
+        <!--Список рендерится из JS-->
+      </ul>
+      <div id="loaderComments" class="loaderComments">Комментарий загружается</div>
+      <div id="add-form" class="add-form">
+        <input id="inputName" type="text" class="add-form-name" placeholder="Введите ваше имя" />
+        <textarea
+          id="inputComment"
+          type="textarea"
+          class="add-form-text"
+          placeholder="Введите ваш комментарий"
+          rows="4"
+        ></textarea>
+        <div class="add-form-row">
+          <button id="buttonComent" class="add-form-button">Написать</button>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 
-<script src="index.js"></script>
-
+  <script src="index.js"></script>
 </html>
