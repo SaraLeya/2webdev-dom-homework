@@ -14,10 +14,17 @@ loaderComments.style.display = 'none';
 let commentsContainer;
 
 function apiGet() {
-  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', { method: 'GET' })
-    .then((response) => {
-      return response.json();
-    })
+  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', 
+  { method: 'GET' 
+})
+.then ((response) => {
+  if (response.status === 200){
+    return response.json();
+  } else{
+    return Promise.reject('Абонент не абонент');
+    alert('Абонент не абонент');
+  }
+})
     .then((response) => {
       commentsContainer = response.comments;
       // Комменты получили - скрываем лоадеры.
@@ -137,12 +144,23 @@ function buttonPost() {
     body: JSON.stringify({
       text: commentElement.value,
       name: nameElement.value,
-    }),
+    })
+    .then ((response) => {
+      if (response.status === 200){
+        return response.json();
+      } else{
+        return Promise.reject('Абонент не абонент');
+        alert('Абонент не абонент');
+      }
+    })
   }).then((response) => {
     // в этом POST-запросе данные не возвращаются. Только результат (успешно или нет)
     commentElement.value = '';
     nameElement.value = '';
-    // перенес управление лоадером в функцию apiGet()
+    
     apiGet();
-  });
+  }).catch ((error) => {
+    throw new Error ('Сервер упал');
+alert ('ERROR');
+ });
 }
