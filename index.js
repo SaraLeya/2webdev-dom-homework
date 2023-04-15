@@ -3,12 +3,11 @@ const listElement = document.getElementById('list');
 const nameElement = document.getElementById('inputName');
 const commentElement = document.getElementById('inputComment');
 const likesContainerElement = document.getElementById('.likes-counter');
-//const addForm = document.querySelectorAll('.add-form');
 const addForm = document.getElementById('add-form');
 const loaderStart = document.querySelector('.loaderStart');
 const loaderComments = document.querySelector('.loaderComments');
 
-// Сразу же скрываем его, так комментарий пока никто не публикует
+// скрываем лоадер коментария
 loaderComments.style.display = 'none';
 
 let commentsContainer;
@@ -20,7 +19,7 @@ function apiGet() {
     })
     .then((response) => {
       commentsContainer = response.comments;
-      // Комменты получили - скрываем лоадеры.
+      // Комменты получили - скрываем лоадеры
       loaderStart.style.display = 'none';
       loaderComments.style.display = 'none';
 
@@ -128,8 +127,6 @@ buttonElement.addEventListener('click', () => {
 });
 
 function buttonPost() {
-  // для управлением отображения лучше напрямую обращаться кс свойству display
-  // показали лоадер
   loaderComments.style.display = 'block';
 
   fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', {
@@ -139,10 +136,11 @@ function buttonPost() {
       name: nameElement.value,
     }),
   }).then((response) => {
-    // в этом POST-запросе данные не возвращаются. Только результат (успешно или нет)
+    // в этом POST-запросе данные не возвращаются. 
+    //Только результат (успешно или нет)
     commentElement.value = '';
     nameElement.value = '';
-    // перенес управление лоадером в функцию apiGet()
+    // управление лоадером в функции apiGet()
     apiGet();
   });
 }
