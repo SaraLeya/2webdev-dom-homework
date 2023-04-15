@@ -18,12 +18,12 @@ function apiGet() {
   { method: 'GET' 
 })
 .then ((response) => {
-  if (response.status === 200){
+//  if (response.status === 200){
     return response.json();
-  } else{
-    return Promise.reject('Абонент не абонент');
-    alert('Абонент не абонент');
-  }
+ // } else{
+  //  return Promise.reject('Абонент не абонент');
+  //  alert('Абонент не абонент');
+ // }
 })
     .then((response) => {
       commentsContainer = response.comments;
