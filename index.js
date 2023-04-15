@@ -13,7 +13,8 @@ loaderComments.style.display = 'none';
 let commentsContainer;
 
 function apiGet() {
-  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', { method: 'GET' })
+  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', 
+  { method: 'GET' })
     .then((response) => {
       return response.json();
     })
