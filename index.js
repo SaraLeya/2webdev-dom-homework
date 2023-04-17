@@ -18,12 +18,7 @@ function apiGet() {
   { method: 'GET' 
 })
 .then ((response) => {
-//  if (response.status === 200){
     return response.json();
- // } else{
-  //  return Promise.reject('Абонент не абонент');
-  //  alert('Абонент не абонент');
- // }
 })
     .then((response) => {
       commentsContainer = response.comments;
@@ -88,30 +83,6 @@ function likesPlus() {
 }
 likesPlus();
 
-//function timeComment () {
-//let myTime = 0;
-//let myDate = new Date();
-//let day = myDate.getDate();
-//let month = myDate.getMonth();
-//let year = myDate.getFullYear();
-//let hour = myDate.getHours();
-//let minute = myDate.getMinutes();
-
-//if (day < 10) {
-// day = "0" + day;
-//}
-//if (month < 10) {
-// month = "0" + month;
-//}
-// if (minute < 10) {
-//  minute = "0" + minute;
-// }
-
-//myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
-//t = myTime;
-//console.log(t);
-//}
-//timeComment ();
 
 function commentsAnswer() {
   const commentsAnswer = document.querySelectorAll('.comment');
@@ -144,23 +115,56 @@ function buttonPost() {
     body: JSON.stringify({
       text: commentElement.value,
       name: nameElement.value,
+    }),
     })
     .then ((response) => {
-      if (response.status === 200){
-        return response.json();
-      } else{
-        return Promise.reject('Абонент не абонент');
+      if (response.status === 500){
         alert('Абонент не абонент');
+        return Promise.reject('Абонент не абонент');
+       
+      } else 
+      
+      if (response.status === 400){
+        alert('Мало букв');
+        return Promise.reject('Мало букв');
+       
+    } else {
+        return response.json();
       }
-    })
   }).then((response) => {
     // в этом POST-запросе данные не возвращаются. Только результат (успешно или нет)
     commentElement.value = '';
     nameElement.value = '';
-    
+    //throw new Error ('Сервер упал');
     apiGet();
   }).catch ((error) => {
-    throw new Error ('Сервер упал');
+  
 alert ('ERROR');
  });
 }
+
+
+//function timeComment () {
+//let myTime = 0;
+//let myDate = new Date();
+//let day = myDate.getDate();
+//let month = myDate.getMonth();
+//let year = myDate.getFullYear();
+//let hour = myDate.getHours();
+//let minute = myDate.getMinutes();
+
+//if (day < 10) {
+// day = "0" + day;
+//}
+//if (month < 10) {
+// month = "0" + month;
+//}
+// if (minute < 10) {
+//  minute = "0" + minute;
+// }
+
+//myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
+//t = myTime;
+//console.log(t);
+//}
+//timeComment ();
