@@ -1,3 +1,6 @@
+import {buttonPost, apiGet} from "./api.js";
+import renderscommentsContainer from "./render.js";
+
 let buttonElement = document.getElementById('buttonComent');
 const listElement = document.getElementById('list');
 const nameElement = document.getElementById('inputName');
@@ -13,55 +16,7 @@ loaderComments.style.display = 'none';
 
 let commentsContainer;
 
-function apiGet() {
-  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', 
-  { method: 'GET' 
-})
-.then ((response) => {
-    return response.json();
-})
-    .then((response) => {
-      commentsContainer = response.comments;
-      // Комменты получили - скрываем лоадеры.
-      loaderStart.style.display = 'none';
-      loaderComments.style.display = 'none';
-
-      renderscommentsContainer();
-    });
-}
-
 apiGet();
-
-function renderscommentsContainer() {
-  const commentsContainerHtml = commentsContainer
-    .map((commentUser, id) => {
-      return `<li data-id="${id}" class="comment">
-        <div class="comment-header">
-          <div>${commentUser.author.name} </div>
-          <div>
-            ${commentUser.date}
-            </div>
-        </div>
-        <div class="comment-body">
-          <div style="white-space: pre-line" class="comment-text">
-            ${commentUser.text}
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">${commentUser.likes}</span>
-            <button data-id="${id}" class="${
-        commentUser.isLiked ? 'like-button -active-like' : 'like-button'
-      }"></button>
-          </div>
-        </div>
-      </li>`;
-    })
-    .join('');
-  listElement.innerHTML = commentsContainerHtml;
-  likesPlus();
-  commentsAnswer();
-}
 
 function likesPlus() {
   const heartsElement = document.querySelectorAll('.like-button');
@@ -104,48 +59,6 @@ buttonElement.addEventListener('click', () => {
   }
   buttonPost();
 });
-
-function buttonPost() {
-  // для управлением отображения лучше напрямую обращаться кс свойству display
-  // показали лоадер
-
-  fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', {
-    method: 'POST',
-    body: JSON.stringify({
-      text: commentElement.value,
-      name: nameElement.value,
-      forceError: true,
-    }),
-    })
-    .then ((response) => {
-      if (response.status === 500){
-        loaderComments.style.display = 'none'; //почему не работает?
-        alert('Сервер не работает. Проверьте подключение и попробуйте еще раз');
-        return Promise.reject('Сервер не работает. Проверьте подключение и попробуйте еще раз');
-        
-      } else 
-      
-      if (response.status === 400){
-        loaderComments.style.display = 'none'; //Почему не убирает?
-        alert('Мало букв');
-        return Promise.reject('Мало букв');
-       
-    } else {
-      loaderComments.style.display = 'block';
-        return response.json();
-      }
-  }).then((response) => {
-    // в этом POST-запросе данные не возвращаются. Только результат (успешно или нет)
-    commentElement.value = '';
-    nameElement.value = '';
-    //throw new Error ('Сервер упал');
-    apiGet();
-  }).catch ((error) => {
-  
-console.log ('ERROR');
- });
-}
-
 
 //function timeComment () {
 //let myTime = 0;
