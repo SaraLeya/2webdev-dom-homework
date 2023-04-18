@@ -108,27 +108,30 @@ buttonElement.addEventListener('click', () => {
 function buttonPost() {
   // для управлением отображения лучше напрямую обращаться кс свойству display
   // показали лоадер
-  loaderComments.style.display = 'block';
 
   fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', {
     method: 'POST',
     body: JSON.stringify({
       text: commentElement.value,
       name: nameElement.value,
+      forceError: true,
     }),
     })
     .then ((response) => {
       if (response.status === 500){
-        alert('Абонент не абонент');
-        return Promise.reject('Абонент не абонент');
-       
+        loaderComments.style.display = 'none'; //почему не работает?
+        alert('Сервер не работает. Проверьте подключение и попробуйте еще раз');
+        return Promise.reject('Сервер не работает. Проверьте подключение и попробуйте еще раз');
+        
       } else 
       
       if (response.status === 400){
+        loaderComments.style.display = 'none'; //Почему не убирает?
         alert('Мало букв');
         return Promise.reject('Мало букв');
        
     } else {
+      loaderComments.style.display = 'block';
         return response.json();
       }
   }).then((response) => {
@@ -139,7 +142,7 @@ function buttonPost() {
     apiGet();
   }).catch ((error) => {
   
-alert ('ERROR');
+console.log ('ERROR');
  });
 }
 
