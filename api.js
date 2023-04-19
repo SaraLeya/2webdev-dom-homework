@@ -1,5 +1,8 @@
 import renderscommentsContainer from "./render.js";
 
+
+let commentsContainer;
+
 function apiGet() {
   fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', 
   { method: 'GET' 
@@ -61,4 +64,4 @@ function buttonPost() {
   });
 }
   
-  export {buttonPost, apiGet};
+  export {buttonPost, apiGet, commentsContainer};

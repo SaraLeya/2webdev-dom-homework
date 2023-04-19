@@ -14,8 +14,6 @@ const loaderComments = document.querySelector('.loaderComments');
 // Сразу же скрываем его, так комментарий пока никто не публикует
 loaderComments.style.display = 'none';
 
-let commentsContainer;
-
 apiGet();
 
 function likesPlus() {
