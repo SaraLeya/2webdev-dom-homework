@@ -3,12 +3,11 @@ const listElement = document.getElementById('list');
 const nameElement = document.getElementById('inputName');
 const commentElement = document.getElementById('inputComment');
 const likesContainerElement = document.getElementById('.likes-counter');
-//const addForm = document.querySelectorAll('.add-form');
 const addForm = document.getElementById('add-form');
 const loaderStart = document.querySelector('.loaderStart');
 const loaderComments = document.querySelector('.loaderComments');
 
-// Сразу же скрываем его, так комментарий пока никто не публикует
+
 loaderComments.style.display = 'none';
 
 let commentsContainer;
@@ -22,7 +21,7 @@ function apiGet() {
 })
     .then((response) => {
       commentsContainer = response.comments;
-      // Комменты получили - скрываем лоадеры.
+     
       loaderStart.style.display = 'none';
       loaderComments.style.display = 'none';
 
@@ -39,7 +38,7 @@ function renderscommentsContainer() {
         <div class="comment-header">
           <div>${commentUser.author.name} </div>
           <div>
-            ${commentUser.date}
+            ${timeComment(commentUser.date)}
             </div>
         </div>
         <div class="comment-body">
@@ -106,8 +105,6 @@ buttonElement.addEventListener('click', () => {
 });
 
 function buttonPost() {
-  // для управлением отображения лучше напрямую обращаться кс свойству display
-  // показали лоадер
 
   fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', {
     method: 'POST',
@@ -117,57 +114,60 @@ function buttonPost() {
       forceError: true,
     }),
     })
-    .then ((response) => {
-      if (response.status === 500){
-        loaderComments.style.display = 'none'; //почему не работает?
+    .then((response) => {
+      if (response.status === 500) {
+        loaderComments.style.display = 'none'; 
         alert('Сервер не работает. Проверьте подключение и попробуйте еще раз');
         return Promise.reject('Сервер не работает. Проверьте подключение и попробуйте еще раз');
-        
-      } else 
-      
-      if (response.status === 400){
-        loaderComments.style.display = 'none'; //Почему не убирает?
+      } else if (response.status === 400) {
+        loaderComments.style.display = 'none'; 
         alert('Мало букв');
         return Promise.reject('Мало букв');
-       
-    } else {
-      loaderComments.style.display = 'block';
+      } else {
+        loaderComments.style.display = 'block';
         return response.json();
       }
-  }).then((response) => {
-    // в этом POST-запросе данные не возвращаются. Только результат (успешно или нет)
+    })
+ .then((response) => {
     commentElement.value = '';
     nameElement.value = '';
-    //throw new Error ('Сервер упал');
     apiGet();
-  }).catch ((error) => {
-  
-console.log ('ERROR');
- });
+  })
+  .catch((error) => {
+    if (error === 'Сервер не работает. Проверьте подключение и попробуйте еще раз') {
+      console.error(error);
+      return;
+    }
+    if (error === 'Мало букв') {
+      console.error(error);
+      return;
+    }
+    // Если не сработал ни один случай выше, то осталась ошибка сервера
+    alert('Кажется, у вас сломался интернет, попробуйте позже');
+    return;
+  });
 }
 
+function timeComment() {
+  let myTime = 0;
+  let myDate = new Date();
+  let day = myDate.getDate();
+  let month = myDate.getMonth();
+  let year = myDate.getFullYear();
+  let hour = myDate.getHours();
+  let minute = myDate.getMinutes();
 
-//function timeComment () {
-//let myTime = 0;
-//let myDate = new Date();
-//let day = myDate.getDate();
-//let month = myDate.getMonth();
-//let year = myDate.getFullYear();
-//let hour = myDate.getHours();
-//let minute = myDate.getMinutes();
+  if (day < 10) {
+    day = '0' + day;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+  if (minute < 10) {
+    minute = '0' + minute;
+  }
 
-//if (day < 10) {
-// day = "0" + day;
-//}
-//if (month < 10) {
-// month = "0" + month;
-//}
-// if (minute < 10) {
-//  minute = "0" + minute;
-// }
-
-//myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
-//t = myTime;
-//console.log(t);
-//}
+  myTime = day + '.' + month + '.' + year + ' ' + hour + ':' + minute;
+  return myTime;
+}
 //timeComment ();
