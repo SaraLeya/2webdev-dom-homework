@@ -1,3 +1,5 @@
+import {commentsContainer} from "./api.js";
+
 let buttonElement = document.getElementById('buttonComent');
 const listElement = document.getElementById('list');
 const nameElement = document.getElementById('inputName');
@@ -10,7 +12,7 @@ const loaderComments = document.querySelector('.loaderComments');
 
 loaderComments.style.display = 'none';
 
-let commentsContainer;
+
 
 function apiGet() {
   fetch('https://webdev-hw-api.vercel.app/api/v1/kolesnichenko-a/comments', 
