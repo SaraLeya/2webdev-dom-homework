@@ -118,7 +118,7 @@ function timeComment () {
     minute = "0" + minute;
    }
   
-  myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
+  return myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
   }
   
   
