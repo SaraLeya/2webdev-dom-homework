@@ -1,20 +1,18 @@
-import {buttonPost, apiGet} from "./api.js";
-import renderscommentsContainer from "./render.js";
+import {buttonPost, apiGet, commentsContainer} from "./api.js";
+import renderscommentsContainer from "./api.js";
 
 let buttonElement = document.getElementById('buttonComent');
-const listElement = document.getElementById('list');
-const nameElement = document.getElementById('inputName');
-const commentElement = document.getElementById('inputComment');
+export const listElement = document.getElementById('list');
+export const nameElement = document.getElementById('inputName');
+export const commentElement = document.getElementById('inputComment');
 const likesContainerElement = document.getElementById('.likes-counter');
 //const addForm = document.querySelectorAll('.add-form');
 const addForm = document.getElementById('add-form');
-const loaderStart = document.querySelector('.loaderStart');
-const loaderComments = document.querySelector('.loaderComments');
+export const loaderStart = document.querySelector('.loaderStart');
+export const loaderComments = document.querySelector('.loaderComments');
 
 // Сразу же скрываем его, так комментарий пока никто не публикует
 loaderComments.style.display = 'none';
-
-let commentsContainer;
 
 apiGet();
 
@@ -60,27 +58,6 @@ buttonElement.addEventListener('click', () => {
   buttonPost();
 });
 
-//function timeComment () {
-//let myTime = 0;
-//let myDate = new Date();
-//let day = myDate.getDate();
-//let month = myDate.getMonth();
-//let year = myDate.getFullYear();
-//let hour = myDate.getHours();
-//let minute = myDate.getMinutes();
 
-//if (day < 10) {
-// day = "0" + day;
-//}
-//if (month < 10) {
-// month = "0" + month;
-//}
-// if (minute < 10) {
-//  minute = "0" + minute;
-// }
-
-//myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
-//t = myTime;
-//console.log(t);
-//}
-//timeComment ();
+export default likesPlus;
+export {commentsAnswer};
