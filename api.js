@@ -1,4 +1,7 @@
-import renderscommentsContainer from "./render.js";
+
+import {listElement, commentElement, nameElement, commentsAnswer} from "./index.js";
+import {loaderStart, loaderComments} from "./index.js";
+import likesPlus from "./index.js";
 
 
 let commentsContainer;
@@ -27,7 +30,7 @@ function buttonPost() {
     body: JSON.stringify({
       text: commentElement.value,
       name: nameElement.value,
-      forceError: true,
+      forceError: false,
     }),
     })
     .then((response) => {
@@ -63,5 +66,61 @@ function buttonPost() {
     return;
   });
 }
+
+function renderscommentsContainer() {
+  const commentsContainerHtml = commentsContainer
+    .map((commentUser, id) => {
+      return `<li data-id="${id}" class="comment">
+        <div class="comment-header">
+          <div>${commentUser.author.name} </div>
+          <div>
+            ${timeComment(commentUser.date)}
+            </div>
+        </div>
+        <div class="comment-body">
+          <div style="white-space: pre-line" class="comment-text">
+            ${commentUser.text}
+          </div>
+        </div>
+        <div class="comment-footer">
+          <div class="likes">
+            <span class="likes-counter">${commentUser.likes}</span>
+            <button data-id="${id}" class="${
+        commentUser.isLiked ? 'like-button -active-like' : 'like-button'
+      }"></button>
+          </div>
+        </div>
+      </li>`;
+    })
+    .join('');
+  listElement.innerHTML = commentsContainerHtml;
+  likesPlus();
+  commentsAnswer();
+}
+
+
+function timeComment () {
+  let myTime = 0;
+  let myDate = new Date();
+  let day = myDate.getDate();
+  let month = myDate.getMonth();
+  let year = myDate.getFullYear();
+  let hour = myDate.getHours();
+  let minute = myDate.getMinutes();
+  
+  if (day < 10) {
+   day = "0" + day;
+  }
+  if (month < 10) {
+   month = "0" + month;
+  }
+   if (minute < 10) {
+    minute = "0" + minute;
+   }
+  
+  myTime = day + "." + month + "." + year + " " + hour + ":" + minute ;
+  }
+  
   
   export {buttonPost, apiGet, commentsContainer};
+  export default renderscommentsContainer;
