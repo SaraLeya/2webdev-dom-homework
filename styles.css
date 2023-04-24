@@ -141,3 +141,31 @@ body {
 .input-error {
   background-color: bisque;
 }
+
+/* стили панели ввода пароля  */
+.add-formPass {
+  padding: 20px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-form-userName,
+.add-form-userPass {
+  font-size: 16px;
+  font-family: Helvetica;
+  border-radius: 8px;
+  border: none;
+}
+
+.add-form-userName {
+  width: 300px;
+  padding: 11px 22px;
+}
+
+.add-form-userPass {
+  margin-top: 12px;
+  width: 300px;
+  padding: 11px 22px;
+  resize: none;
+}
